@@ -6,7 +6,7 @@ gunicorn==21.2.0
 # --- Image Handling & Conversion ---
 Pillow==10.3.0
 pillow-heif==0.16.0 # Crucial for HEIC/HEIF support
-mutool==1.23.0 # Required by PyMuPDF for rendering/compression
+
 
 # --- PDF Handling ---
 # PyMuPDF is imported as 'fitz'
