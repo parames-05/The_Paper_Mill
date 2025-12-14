@@ -17,7 +17,9 @@ pikepdf==8.2.0 # Used for PDF manipulation/compression (though you used PyMuPDF/
 
 # --- MS Office File Handling ---
 # For DOCX to HTML conversion
-python-mammoth==1.5.0
+mammoth==1.5.0
+
+
 # For reading XLSX files
 openpyxl==3.1.2
 # For reading PPTX files
