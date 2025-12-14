@@ -1,6 +1,7 @@
 # --- Web Framework & Utilities ---
 Flask==3.0.3
 Werkzeug==3.0.3
+gunicorn==21.2.0
 
 # --- Image Handling & Conversion ---
 Pillow==10.3.0
