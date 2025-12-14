@@ -1,3 +1,4 @@
+from datetime import datetime, timezone
 import os
 import tempfile
 import shutil
@@ -34,6 +35,16 @@ pillow_heif.register_heif_opener()
 
 # --- Page Routes ---
 # ... (all your @app.route page routes are correct) ...
+
+@app.route("/healthz")
+def health_check():
+    return {
+        "status": "ok",
+        "service": "The_Paper_Mill",
+        "time": datetime.now(timezone.utc).isoformat()
+    }, 200
+
+
 @app.route("/work-in-progress")
 def work_in_progress():
     return render_template("work_in_progress.html")
