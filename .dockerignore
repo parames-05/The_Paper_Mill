@@ -1,0 +1,107 @@
+# ==============================
+# Python bytecode / caches
+# ==============================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.cache/
+
+# ==============================
+# Virtual environments
+# ==============================
+.venv/
+venv/
+env/
+ENV/
+
+# ==============================
+# Packaging / build artifacts
+# ==============================
+build/
+dist/
+.eggs/
+*.egg-info/
+
+# ==============================
+# Git & version control
+# ==============================
+.git/
+.gitignore
+.gitattributes
+
+# ==============================
+# IDEs & editors
+# ==============================
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ==============================
+# OS / system junk
+# ==============================
+.DS_Store
+.DS_Store?
+Thumbs.db
+desktop.ini
+
+# ==============================
+# Logs & runtime files
+# ==============================
+*.log
+logs/
+*.pid
+
+# ==============================
+# Environment / secrets
+# ==============================
+.env
+.env.*
+*.pem
+*.key
+*.crt
+
+# ==============================
+# Node / Playwright leftovers
+# ==============================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ==============================
+# Playwright cache (browser is installed in image)
+# ==============================
+.ms-playwright/
+
+# ==============================
+# Temporary & upload folders
+# ==============================
+tmp/
+temp/
+uploads/
+*.tmp
+
+# ==============================
+# Tests & local tooling
+# ==============================
+tests/
+.coverage
+htmlcov/
+
+# ==============================
+# Docs & misc
+# ==============================
+docs/
+*.md
+
+# ==============================
+# Docker / CI artifacts
+# ==============================
+docker-compose.yml
+Dockerfile.dev
