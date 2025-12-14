@@ -1,0 +1,35 @@
+# --- Web Framework & Utilities ---
+Flask==3.0.3
+Werkzeug==3.0.3
+
+# --- Image Handling & Conversion ---
+Pillow==10.3.0
+pillow-heif==0.16.0 # Crucial for HEIC/HEIF support
+mutool==1.23.0 # Required by PyMuPDF for rendering/compression
+
+# --- PDF Handling ---
+# PyMuPDF is imported as 'fitz'
+PyMuPDF==1.24.4
+PyPDF2==3.0.1
+reportlab==4.1.0 # Used for basic Excel to PDF text rendering
+pikepdf==8.2.0 # Used for PDF manipulation/compression (though you used PyMuPDF/fitz for the compression logic)
+
+# --- MS Office File Handling ---
+# For DOCX to HTML conversion
+python-mammoth==1.5.0
+# For reading XLSX files
+openpyxl==3.1.2
+# For reading PPTX files
+python-pptx==0.6.23
+
+# --- Web Rendering for Office Conversion ---
+# Used for headless browser rendering (HTML -> PDF for Word/PPTX)
+playwright==1.43.0
+
+# --- Data Handling ---
+pandas==2.2.2 # Used for CSV and JSON handling
+# Dependency for pandas to read CSV and sniff encoding
+chardet==5.2.0
+
+# --- Other Utilities ---
+# io, os, tempfile, shutil, csv, traceback are standard library modules

@@ -1,0 +1,316 @@
+{% extends "base.html" %}
+{% block title %}{{ title }} - The Paper Mill{% endblock %}
+
+{% block content %}
+<section class="relative py-20 bg-gray-50 hatch-texture-dense">
+  <div class="relative z-10 p-8 md:p-12 bg-white max-w-4xl mx-auto" style="clip-path: polygon(0% 1%, 2% 0%, 98% 0%, 100% 2%, 100% 98%, 98% 100%, 2% 100%, 0% 99%);">
+    <svg class="absolute inset-0 w-full h-full pointer-events-none" style="overflow: visible;">
+      <rect x="3" y="3" width="calc(100% - 6px)" height="calc(100% - 6px)" fill="none" stroke="#333" strokeWidth="2" strokeLinecap="round" vectorEffect="non-scaling-stroke" style="stroke-dasharray: 3 2; opacity: 0.6;"></rect>
+      <rect x="2" y="2" width="calc(100% - 4px)" height="calc(100% - 4px)" fill="none" stroke="#000" strokeWidth="2.5" strokeLinecap="round" vectorEffect="non-scaling-stroke" style="stroke-dasharray: 4 1;"></rect>
+    </svg>
+
+    <div class="relative z-10">
+      <h1 class="text-5xl md:text-6xl leading-tight mb-4">{{ title }}</h1>
+      <p id="subtitle" class="text-2xl text-gray-600 mb-8">Loading subtitle...</p>
+        {% if show_doc_warning %}
+        <div id="doc-modal"
+            class="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+
+  <div class="relative bg-white max-w-lg w-full mx-4 p-6 border-4 border-gray-900 animate-pop-in"
+       style="clip-path: polygon(0% 2%, 2% 0%, 98% 0%, 100% 2%, 100% 98%, 98% 100%, 2% 100%, 0% 98%);">
+
+    <!-- Close button -->
+    <button onclick="closeDocModal()"
+            class="absolute top-3 right-3 text-3xl leading-none font-bold">
+      ×
+    </button>
+
+    <h2 class="text-3xl mb-4">🚧 Document Tools Under Development</h2>
+
+    <p class="text-xl text-gray-700 leading-relaxed">
+      Document tools are still being actively built.
+      You may experience alignment issues and imperfect image rendering.
+      <br><br>
+      For best results, we recommend using the Image or PDF tools for now.
+    </p>
+
+    <p class="mt-4 italic text-gray-600">
+      XOXO — your friendly neighbourhood developer,<br>
+      fixing one error at a time 🙂
+    </p>
+
+    <div class="mt-6 text-right">
+      <button onclick="closeDocModal()"
+              class="animated-button px-6 py-2 bg-gray-900 text-white">
+        Got it
+      </button>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+
+
+      <form id="upload-form" class="space-y-6" action="{{ upload_endpoint or url_for('convert_images_to_pdf') }}" method="POST" enctype="multipart/form-data">
+        <div>
+          <label for="file-input" class="animated-button relative inline-block px-8 py-3 bg-gray-900 text-white transition-all duration-200 cursor-pointer" style="clip-path: polygon(1% 0%, 99% 0%, 100% 2%, 100% 98%, 99% 100%, 1% 100%, 0% 98%, 0% 2%); filter: drop-shadow(2px 2px 0px rgba(0,0,0,0.1));">
+            <svg class="absolute inset-0 w-full h-full pointer-events-none" style="overflow: visible;">
+              <rect x="2" y="2" width="calc(100% - 4px)" height="calc(100% - 4px)" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" vectorEffect="non-scaling-stroke" style="stroke-dasharray: 2 1; filter: url(#pencil-texture);"></rect>
+            </svg>
+            <span class="relative z-10">Choose file(s)</span>
+          </label>
+          <input type="file" id="file-input" name="files" multiple accept="{{ file_accept }}" class="hidden">
+        </div>
+
+        <div id="preview-container" class="relative p-4 bg-white border-4 border-gray-900 border-dashed min-h-[150px]">
+          <p class="text-xl text-gray-500">No files uploaded yet.</p>
+        </div>
+
+        <div id="extra-options" class="text-xl space-y-2 pt-4"></div>
+
+        <div class="flex flex-wrap gap-4 pt-4">
+          <button type="submit" class="animated-button relative px-8 py-3 bg-gray-900 text-white transition-all duration-200" style="clip-path: polygon(1% 0%, 99% 0%, 100% 2%, 100% 98%, 99% 100%, 1% 100%, 0% 98%, 0% 2%); filter: drop-shadow(2px 2px 0px rgba(0,0,0,0.1));">
+            <svg class="absolute inset-0 w-full h-full pointer-events-none" style="overflow: visible;">
+              <rect x="2" y="2" width="calc(100% - 4px)" height="calc(100% - 4px)" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" vectorEffect="non-scaling-stroke" style="stroke-dasharray: 2 1; filter: url(#pencil-texture);"></rect>
+            </svg>
+            <span class="relative z-10 text-xl">Convert</span>
+          </button>
+
+          <button type="button" id="clear-btn" class="animated-button relative px-8 py-3 bg-white text-gray-900 transition-all duration-200" style="clip-path: polygon(1% 0%, 99% 0%, 100% 2%, 100% 98%, 99% 100%, 1% 100%, 0% 98%, 0% 2%); filter: drop-shadow(2px 2px 0px rgba(0,0,0,0.1));">
+            <svg class="absolute inset-0 w-full h-full pointer-events-none" style="overflow: visible;">
+              <rect x="2" y="2" width="calc(100% - 4px)" height="calc(100% - 4px)" fill="none" stroke="#000" strokeWidth="2" strokeLinecap="round" vectorEffect="non-scaling-stroke" style="stroke-dasharray: 2 1; filter: url(#pencil-texture);"></rect>
+            </svg>
+            <span class="relative z-10 text-xl">Clear</span>
+          </button>
+        </div>
+      </form>
+
+      <div id="progress" class="text-xl flex items-center gap-4 mt-6" style="display:none;">
+        <span id="progress-text">Processing...</span>
+        <div class="loader"></div>
+      </div>
+
+      <p id="message-box" class="text-xl font-bold mt-6"></p>
+    </div>
+
+    <style>
+      #extra-options label { font-size: 1.5rem; display: block; margin-bottom: 0.5rem; }
+      #extra-options input[type="text"] { font-family: 'Caveat', cursive; font-size: 1.5rem; padding: 0.5rem 0.75rem; border: 3px dashed #333; background: #fdfdfd; width: 100%; }
+      #extra-options input[type="range"] { width: 100%; cursor: pointer; }
+      #extra-options span { font-size: 1.5rem; margin-left: 1rem; }
+    </style>
+
+      <style>
+  .doc-warning {
+    background: #fff3cd;
+    color: #664d03;
+    border: 2px dashed #ffecb5;
+    padding: 16px 18px;
+    border-radius: 6px;
+    font-family: system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+    </style>
+
+    <style>
+      .preview-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+      #preview-container { display: flex; flex-wrap: wrap; gap: 10px; }
+      .preview-item { position: relative; width: 120px; height: 120px; border: 2px dashed #ccc; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; background: #f8f8f8; cursor: grab; transition: transform 0.2s, border-color 0.2s; }
+      .preview-item.dragging { opacity: 0.5; transform: scale(0.95); border-color: #3b82f6; }
+      .preview-item.over { border-color: #22c55e; }
+      .preview-item img { width: 100%; height: 100%; object-fit: cover; }
+      .preview-item span { position: absolute; bottom: 2px; left: 0; right: 0; background: rgba(0,0,0,0.6); color: white; font-size: 11px; padding: 2px; text-align: center; font-family: 'Architects Daughter', cursive; }
+      .loader { display: inline-block; width: 18px; height: 18px; border: 3px solid #ddd; border-top: 3px solid #3b82f6; border-radius: 50%; animation: spin 1s linear infinite; margin-left: 8px; vertical-align: middle; }
+      @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+
+    <script>
+      const form = document.getElementById('upload-form');
+      const fileInput = document.getElementById('file-input');
+      const previewContainer = document.getElementById('preview-container');
+      const clearBtn = document.getElementById('clear-btn');
+      const msgBox = document.getElementById('message-box');
+      const progressBox = document.getElementById('progress');
+      const progressText = document.getElementById('progress-text');
+      const extraOptions = document.getElementById('extra-options');
+      const subtitle = document.getElementById('subtitle');
+      let uploadedFiles = [];
+
+      const titleText = "{{ title }}".toLowerCase();
+      if (titleText.includes("zip")) subtitle.textContent = "Upload a ZIP containing images — we'll convert them into one PDF.";
+      else if (titleText.includes("compress") && titleText.includes("pdf")) subtitle.textContent = "Upload a PDF to compress and reduce file size.";
+      else if (titleText.includes("compress") && titleText.includes("image")) { subtitle.textContent = "Upload an image to compress it (smaller file, same clarity)."; addImageQualitySlider(); }
+      else if (titleText.includes("csv") && titleText.includes("xlsx")) subtitle.textContent = "Upload your CSV file to convert it into an Excel (.xlsx) sheet.";
+      else if (titleText.includes("json") && titleText.includes("csv")) subtitle.textContent = "Upload your JSON file — we’ll flatten it and convert to CSV.";
+      else if (titleText.includes("split")) { subtitle.textContent = "Upload a PDF to split pages. You can specify a range below."; addPageRangeInput(); }
+      else subtitle.textContent = "Upload your images. Drag and drop to reorder them before converting.";
+
+      function closeDocModal() {
+        const modal = document.getElementById('doc-modal');
+        if (modal) modal.style.display = 'none';
+  }
+
+      function addPageRangeInput() {
+        extraOptions.innerHTML = `<label for="split-range">Page range (optional):</label><input type="text" id="split-range" name="range" placeholder="All pages by default">`;
+      }
+
+      function addImageQualitySlider() {
+        extraOptions.innerHTML = `<label for="quality">Quality (20-100):</label><input type="range" id="quality" name="quality" min="20" max="100" value="60" oninput="document.getElementById('qv').textContent=this.value"><span id="qv">60</span>`;
+      }
+
+      fileInput.addEventListener('change', () => { uploadedFiles = [...fileInput.files]; renderPreviews(); });
+
+      function renderPreviews() {
+        previewContainer.innerHTML = '';
+        if (uploadedFiles.length === 0) {
+          previewContainer.innerHTML = '<p class="text-xl text-gray-500">No files uploaded yet.</p>';
+          return;
+        }
+
+        const visualFormats = ['image/', 'application/pdf'];
+        const showThumbnails = visualFormats.some(fmt => uploadedFiles.some(f => f.type.startsWith(fmt)));
+
+        if (!showThumbnails) {
+          const list = document.createElement('ul');
+          list.className = 'list-disc list-inside text-xl';
+          uploadedFiles.forEach(f => {
+            const li = document.createElement('li');
+            li.textContent = f.name;
+            list.appendChild(li);
+          });
+          previewContainer.appendChild(list);
+          return;
+        }
+
+        uploadedFiles.forEach((file, index) => {
+          const item = document.createElement('div');
+          item.classList.add('preview-item');
+          item.setAttribute('draggable', 'true');
+          item.dataset.index = index;
+
+          if (file.type.startsWith('image/')) {
+            const img = document.createElement('img');
+            img.src = URL.createObjectURL(file);
+            item.appendChild(img);
+          } else if (file.type === 'application/pdf') {
+            const icon = document.createElement('div');
+            icon.textContent = '📄';
+            icon.style.fontSize = '48px';
+            item.appendChild(icon);
+          } else {
+            const txt = document.createElement('div');
+            txt.textContent = file.name;
+            txt.style.fontSize = '12px';
+            txt.style.textAlign = 'center';
+            txt.style.padding = '5px';
+            item.appendChild(txt);
+          }
+
+          const label = document.createElement('span');
+          label.textContent = file.name.length > 12 ? file.name.slice(0, 12) + '…' : file.name;
+          item.appendChild(label);
+          previewContainer.appendChild(item);
+        });
+
+        enableDragAndDrop();
+      }
+
+      function enableDragAndDrop() {
+        const items = document.querySelectorAll('.preview-item');
+        let draggedItem = null;
+
+        items.forEach(item => {
+          item.addEventListener('dragstart', () => {
+            draggedItem = item;
+            item.classList.add('dragging');
+          });
+          item.addEventListener('dragend', () => {
+            item.classList.remove('dragging');
+            draggedItem = null;
+            items.forEach(i => i.classList.remove('over'));
+          });
+          item.addEventListener('dragover', e => {
+            e.preventDefault();
+            const current = e.target.closest('.preview-item');
+            if (!current || current === draggedItem) return;
+            items.forEach(i => i.classList.remove('over'));
+            current.classList.add('over');
+            previewContainer.insertBefore(draggedItem, current);
+          });
+          item.addEventListener('drop', e => { e.preventDefault(); updateFileOrder(); });
+        });
+      }
+
+      function updateFileOrder() {
+        const reordered = [];
+        previewContainer.querySelectorAll('.preview-item').forEach(item => {
+          const index = parseInt(item.dataset.index);
+          reordered.push(uploadedFiles[index]);
+        });
+        uploadedFiles = reordered;
+      }
+
+      clearBtn.addEventListener('click', () => {
+        uploadedFiles = [];
+        fileInput.value = '';
+        renderPreviews();
+      });
+
+      form.addEventListener('submit', async e => {
+        e.preventDefault();
+        if (uploadedFiles.length === 0) {
+          msgBox.style.color = 'red';
+          msgBox.textContent = 'Please upload at least one file.';
+          return;
+        }
+
+        msgBox.textContent = '';
+        progressBox.style.display = 'inline-block';
+        progressText.textContent = 'Processing...';
+
+        const formData = new FormData();
+        uploadedFiles.forEach(file => formData.append('files', file));
+
+        const rangeInput = document.getElementById('split-range');
+        if (rangeInput && rangeInput.value) formData.append('range', rangeInput.value);
+
+        const qualityInput = document.getElementById('quality');
+        if (qualityInput) formData.append('quality', qualityInput.value);
+
+        try {
+          const response = await fetch(form.action, { method: 'POST', body: formData });
+          progressText.textContent = '';
+          progressBox.style.display = 'none';
+
+          if (response.ok) {
+            const blob = await response.blob();
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = getSuggestedFilename();
+            a.click();
+            msgBox.style.color = 'green';
+            msgBox.textContent = 'Conversion complete. File downloaded.';
+            clearBtn.click();
+          } else {
+            msgBox.style.color = 'red';
+            msgBox.textContent = `Error ${response.status}: ${await response.text()}`;
+          }
+        } catch (err) {
+          console.error(err);
+          msgBox.style.color = 'red';
+          msgBox.textContent = 'Unexpected error.';
+          progressBox.style.display = 'none';
+        }
+      });
+
+      function getSuggestedFilename() {
+        const clean = titleText.replace(/\s+/g, '_').replace(/[^\w]/g, '');
+        const extension = titleText.includes('csv') ? 'csv' : titleText.includes('xlsx') ? 'xlsx' : (titleText.includes('compress') && titleText.includes('image')) ? 'jpg' : titleText.includes('pdf') ? 'pdf' : 'zip';
+        return clean + '_output.' + extension;
+      }
+    </script>
+  </div>
+</section>
+{% endblock %}

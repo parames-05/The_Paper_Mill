@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}Work in Progress – The Paper Mill{% endblock %}
+
+{% block content %}
+
+<section class="relative py-24 bg-gray-50 hatch-texture-dense">
+  <div class="max-w-[900px] mx-auto px-8 relative z-10 text-center">
+
+    <!-- Card -->
+    <div class="relative bg-white p-12 border-4 border-gray-900 inline-block"
+         style="clip-path: polygon(0% 2%, 2% 0%, 98% 0%, 100% 2%, 100% 98%, 98% 100%, 2% 100%, 0% 98%);">
+
+      <!-- Scribble animation -->
+      <div style="
+        width: 120px;
+        height: 120px;
+        margin: 0 auto 24px;
+        border: 3px dashed #111;
+        border-radius: 50%;
+        position: relative;
+        animation: wobble 1.6s infinite ease-in-out;
+      ">
+        <div style="
+          position: absolute;
+          inset: 20px;
+          border: 3px dashed #555;
+          border-radius: 50%;
+          animation: spin 4s linear infinite;
+        "></div>
+      </div>
+
+      <h1 class="text-5xl mb-4">
+        Work in Progress
+      </h1>
+
+      <p class="text-2xl text-gray-700 leading-relaxed mb-6">
+        This feature is currently being built, tested, and occasionally argued with.
+        <br>
+        Some features may be incomplete or unavailable for now.
+      </p>
+
+      <p class="italic text-xl text-gray-600 mb-8">
+        Your friendly neighbourhood developer is on it ✏️
+      </p>
+
+      <a href="{{ url_for('index') }}"
+         class="animated-button inline-block px-8 py-3 bg-gray-900 text-white text-xl">
+        Back to Home
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<style>
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes wobble {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-2deg); }
+  75% { transform: rotate(2deg); }
+}
+</style>
+
+{% endblock %}

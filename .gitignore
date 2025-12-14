@@ -1,0 +1,86 @@
+# ==========================================================
+# 1. Byte-compiled / Temporary Files
+# ==========================================================
+# Compiled Python files
+__pycache__/
+*.pyc
+*$py.class
+
+# OS generated files
+.DS_Store
+.localized
+.env
+
+# ==========================================================
+# 2. Virtual Environment
+# ==========================================================
+# The virtual environment directory itself
+.venv/
+env/
+venv/
+VENV/
+
+# Windows specific environment files
+pip-log.txt
+pip-delete-this-file.txt
+
+# ==========================================================
+# 3. Development / IDE Specific Files
+# ==========================================================
+# JetBrains IDE (PyCharm, IntelliJ, etc.)
+.idea/
+
+# Visual Studio Code
+.vscode/
+
+# IPython notebook files
+.ipynb_checkpoints
+
+# ==========================================================
+# 4. Flask / Web App Specific
+# ==========================================================
+# Flask session files (if used)
+flask_session/
+
+# Static files generated locally (if not meant to be committed)
+/static/dist/
+/static/build/
+
+# Python data handling artifacts
+# Pandas temporary files
+.cache
+
+# ==========================================================
+# 5. Deployment / Build Artifacts
+# ==========================================================
+# Logs
+*.log
+!docs/logs/
+/log/
+
+# Packaging/distribution
+.eggs/
+*.egg-info/
+dist/
+build/
+
+# Playwright binaries (downloaded by playwright install)
+# This can be large, so usually best to ignore and install dynamically
+.playwright/
+# Testing / typing / linting
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Flask runtime
+instance/
+
+# Databases
+*.sqlite3
+*.db
+
+# Environment variants
+.env.*
+*.env

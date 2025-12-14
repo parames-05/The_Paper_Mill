@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+{% block title %}How to Use – The Paper Mill{% endblock %}
+
+{% block content %}
+
+<section class="relative py-20 bg-gray-50 hatch-texture-dense">
+  <div class="max-w-[1200px] mx-auto px-8 relative z-10">
+
+    <!-- Page Heading -->
+    <h1 class="text-6xl md:text-7xl text-center mb-6">
+      How to Use The Paper Mill
+    </h1>
+    <p class="text-2xl text-center text-gray-600 mb-16">
+      A simple, no-nonsense workflow. Convert files in seconds.
+    </p>
+
+    <!-- STEP 1 -->
+    <div class="grid md:grid-cols-2 gap-12 items-center mb-20">
+      <div>
+        <h2 class="text-4xl mb-4">Step 1: Choose the conversion format</h2>
+        <p class="text-2xl text-gray-700 leading-relaxed">
+          Start by selecting the tool you need — Image, PDF, or Document tools.
+          Each tool is designed for a specific type of conversion, so choosing
+          the right format ensures the best results.
+        </p>
+      </div>
+
+      <div class="relative bg-white p-6 border-4 border-gray-900"
+           style="clip-path: polygon(0% 2%, 2% 0%, 98% 0%, 100% 2%, 100% 98%, 98% 100%, 2% 100%, 0% 98%);">
+
+        <img
+          src="{{ url_for('static', filename='demo1.png') }}"
+          alt="Choose conversion format"
+          style="
+            width: 100%;
+            height: 220px;
+            object-fit: contain;
+            background: #fafafa;
+            border: 2px dashed #999;
+            padding: 12px;
+            box-sizing: border-box;
+            display: block;
+          "
+        >
+      </div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="grid md:grid-cols-2 gap-12 items-center mb-20">
+      <div>
+        <h2 class="text-4xl mb-4">Step 2: Click the “Choose files” button</h2>
+        <p class="text-2xl text-gray-700 leading-relaxed">
+          Upload one or multiple files using the
+          <strong>Choose files</strong> button.
+          Supported file types are shown for each tool, so you always know
+          what can be uploaded.
+        </p>
+      </div>
+
+      <div class="relative bg-white p-6 border-4 border-gray-900"
+           style="clip-path: polygon(0% 2%, 2% 0%, 98% 0%, 100% 2%, 100% 98%, 98% 100%, 2% 100%, 0% 98%);">
+
+        <img
+          src="{{ url_for('static', filename='demo2.png') }}"
+          alt="Upload files"
+          style="
+            width: 100%;
+            height: 220px;
+            object-fit: contain;
+            background: #fafafa;
+            border: 2px dashed #999;
+            padding: 12px;
+            box-sizing: border-box;
+            display: block;
+          "
+        >
+      </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="grid md:grid-cols-2 gap-12 items-center mb-20">
+      <div>
+        <h2 class="text-4xl mb-4">Step 3: Arrange or remove files</h2>
+        <p class="text-2xl text-gray-700 leading-relaxed">
+          You can remove unwanted files using the <strong>X</strong> button,
+          or rearrange the file order by dragging items into the sequence
+          you prefer. This is especially useful for PDF and image merges.
+        </p>
+      </div>
+
+      <div class="relative bg-white p-6 border-4 border-gray-900"
+           style="clip-path: polygon(0% 2%, 2% 0%, 98% 0%, 100% 2%, 100% 98%, 98% 100%, 2% 100%, 0% 98%);">
+
+        <img
+          src="{{ url_for('static', filename='demo3.png') }}"
+          alt="Reorder and remove files"
+          style="
+            width: 100%;
+            height: 220px;
+            object-fit: contain;
+            background: #fafafa;
+            border: 2px dashed #999;
+            padding: 12px;
+            box-sizing: border-box;
+            display: block;
+          "
+        >
+      </div>
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="text-center max-w-3xl mx-auto">
+      <h2 class="text-4xl mb-4">Step 4: Click Convert</h2>
+      <p class="text-2xl text-gray-700 leading-relaxed mb-6">
+        Once everything is set, click the <strong>Convert</strong> button.
+        Your file will be processed automatically, and the download
+        will begin as soon as the conversion is complete.
+      </p>
+
+      <div class="inline-block px-8 py-4 bg-gray-900 text-white text-2xl animated-button">
+        Conversion starts automatically 🚀
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{% endblock %}
